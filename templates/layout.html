@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    {% block head %}
+    <link rel="apple-touch-icon" sizes="180x180" href="static/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="static/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="static/favicon-16x16.png">
+    <link rel="manifest" href="static/manifest.json" />
+    <title>{% block title %}{% endblock %} - leo</title>
+    {% endblock %}
+  </head>
+
+  <body>
+    <div id="menu">
+      <ul>
+        <li><a href="{{ url_for('home') }}">home</a></li>
+        <li><a href="{{ url_for('list_feeds') }}">feeds</a></li>
+      </ul>
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+      {% block footer %}
+      <hr/>
+      a footer
+      {% endblock %}
+    </div>
+  </body>
+</html>
