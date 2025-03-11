@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% block title %}feeds{% endblock %}
 {% block content %}
 
 <h1>feeds</h1>
@@ -6,7 +7,7 @@
 <ul>
   {% for f in feeds %}
   <li>
-    {{ f.title }} - {{ f.url }} - {{f.link}}
+    <a href="{{ url_for('show_feed', slug=reader.get_feed_slug(f.url)) }}">{{ f.title }}</a>
   </li>
   {% endfor %}
 </ul>
