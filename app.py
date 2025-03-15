@@ -6,6 +6,7 @@ from flask import redirect, url_for
 from flask import render_template
 from flask import request
 from reader import make_reader
+from nh3 import clean
 import feed_slugs
 import random
 
@@ -17,6 +18,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
+    reader.update_feeds()
     return render_template('home.html')
 
 
@@ -46,7 +48,11 @@ def add_feed():
 def show_feed(slug):
     feed = reader.get_feed_by_slug(slug.lower())
     entries = reader.get_entries(feed=feed)
-    return render_template('feed.html', feed=feed, entries=entries)
+    articles = []
+    for e in entries:
+        if e.get_content():
+            articles.append(clean(e.get_content().value))
+    return render_template('feed.html', feed=feed, entries=entries, articles=articles)
 
 
 def generate_id():

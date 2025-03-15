@@ -7,10 +7,9 @@
 </p>
 
 <ul>
-  {% for e in entries %}
-  <li>
-    {{ e.resource_id }}
-    {{ e.get_content() }}
+  {% for a in articles %}
+  <li style="border: solid;">
+    {{ a | safe}}
   </li>
   {% endfor %}
 </ul>
