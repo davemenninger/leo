@@ -2,15 +2,24 @@
 {% block title %}{{ feed.title }}{% endblock %}
 {% block content %}
 <h1>feed</h1>
-<p>
-    {{ feed.resource_id }} - {{ feed.title }} - {{ feed.url }} - {{feed.link}}
-</p>
+<h2><a href={{feed.link}} >{{feed.title}}</a></h2>
+<pre>
+    {{ feed.resource_id }} | {{ feed.title }} | {{ feed.url }} | {{feed.link}}
+</pre>
 
 <ul>
-  {% for a in articles %}
-  <li style="border: solid;">
-    {{ a | safe}}
+  {% for e in entries %}
+  <li>
+    <h3><a href={{ e.link }} >{{ e.title }}</a></h3>
+    <pre>
+      {{ e.resource_id }}
+      {{ e.updated_not_none }}
+    </pre>
+    <div>
+      {{ e.get_content().value | clean | safe }}
+    </div>
   </li>
   {% endfor %}
 </ul>
+
 {% endblock %}

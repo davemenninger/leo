@@ -16,6 +16,18 @@ reader = make_reader("db.sqlite", plugins=[feed_slugs.init_reader])
 app = Flask(__name__)
 
 
+@app.template_filter('clean')
+def inject_clean(html):
+    s = ""
+    try:
+        s = clean(html)
+    except TypeError as e:
+        print(e)
+        pass
+
+    return s
+
+
 @app.route("/")
 def home():
     reader.update_feeds()
@@ -48,11 +60,7 @@ def add_feed():
 def show_feed(slug):
     feed = reader.get_feed_by_slug(slug.lower())
     entries = reader.get_entries(feed=feed)
-    articles = []
-    for e in entries:
-        if e.get_content():
-            articles.append(clean(e.get_content().value))
-    return render_template('feed.html', feed=feed, entries=entries, articles=articles)
+    return render_template('feed.html', feed=feed, entries=entries)
 
 
 def generate_id():
