@@ -8,3 +8,8 @@
 
 `flask run`
 
+_or_
+
+`. .venv/bin/activate.fish`
+
+`flask run`
