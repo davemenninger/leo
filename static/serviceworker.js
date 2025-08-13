@@ -1,5 +1,5 @@
 const urlsToCache = [
-  "/", "static/leo.js"
+  "leo.js"
 ];
 
 self.addEventListener("install", event => {
