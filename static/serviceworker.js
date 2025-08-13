@@ -1,5 +1,5 @@
 const urlsToCache = [
-  "/", "leo.js"
+  "/", "static/leo.js"
 ];
 
 self.addEventListener("install", event => {
@@ -9,4 +9,8 @@ self.addEventListener("install", event => {
       return cache.addAll(urlsToCache);
     });
   );
+});
+
+self.addEventListener("activate", event => {
+  console.log("service worker activated");
 });
