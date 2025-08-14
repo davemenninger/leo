@@ -37,10 +37,12 @@ def home():
 @app.route("/url")
 def url():
     url = request.args.get('url', '')
+    text = request.args.get('text', '')
+    title = request.args.get('title', '')
     if not url:
-        url = request.args.get('text', '')
+        url = text
     feeds = find_feeds(url)
-    return render_template('url.html', url=url, feeds=feeds)
+    return render_template('url.html', url=url, text=text, title=title, feeds=feeds)
 
 
 @app.get("/feeds")
