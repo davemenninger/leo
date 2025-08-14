@@ -39,9 +39,10 @@ def url():
     url = request.args.get('url', '')
     text = request.args.get('text', '')
     title = request.args.get('title', '')
-    if not url:
-        url = text
-    feeds = find_feeds(url)
+    if url:
+        feeds = find_feeds(url)
+    else:
+        feeds = find_feeds(text)
     return render_template('url.html', url=url, text=text, title=title, feeds=feeds)
 
 
