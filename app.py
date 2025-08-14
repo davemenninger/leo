@@ -37,6 +37,8 @@ def home():
 @app.route("/url")
 def url():
     url = request.args.get('url', '')
+    if not url:
+        url = request.args.get('text', '')
     feeds = find_feeds(url)
     return render_template('url.html', url=url, feeds=feeds)
 
