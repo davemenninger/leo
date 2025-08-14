@@ -16,7 +16,7 @@
    ],
    "name" : "leo",
    "share_target" : {
-      "action" : "/",
+      "action" : "/url",
       "method" : "GET",
       "params" : {
          "text" : "text",
