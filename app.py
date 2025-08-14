@@ -13,7 +13,7 @@ import random
 
 reader = make_reader("db.sqlite", plugins=[feed_slugs.init_reader])
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 
 
 @app.template_filter('clean')
