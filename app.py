@@ -1,20 +1,29 @@
 #!/usr/bin/env python3
 
+from auth import auth
+from db import init_app
 from feedfinder2 import find_feeds
 from flask import Flask
+from flask import g
 from flask import redirect, url_for
 from flask import render_template
 from flask import request
-from reader import make_reader
 from nh3 import clean
+from reader import make_reader
 import feed_slugs
+import os
 import random
-
-
-reader = make_reader("db.sqlite", plugins=[feed_slugs.init_reader])
 
 app = Flask(__name__, static_url_path='')
 
+db_file = os.path.join(app.instance_path, 'db.sqlite')
+reader = make_reader(db_file, plugins=[feed_slugs.init_reader])
+app.config.from_mapping(SECRET_KEY='dev',DATABASE=db_file)
+
+
+init_app(app)
+
+app.register_blueprint(auth)
 
 @app.template_filter('clean')
 def inject_clean(html):
