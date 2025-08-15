@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, flash, redirect, session, g
+import functools
+from flask import Blueprint, render_template, request, flash, redirect, session, g, url_for
 from werkzeug.security import check_password_hash
 
 from db import get_db
@@ -15,6 +16,17 @@ def load_logged_in_user():
         g.user = get_db().execute(
             'SELECT * FROM user WHERE id = ?', (user_id,)
         ).fetchone()
+
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            flash("requires login")
+            return redirect(url_for('auth.login'))
+
+        return view(**kwargs)
+
+    return wrapped_view
 
 @auth.route('/logout')
 def logout():

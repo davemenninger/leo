@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from auth import auth
+from auth import auth, login_required
 from db import init_app
 from feedfinder2 import find_feeds
 from flask import Flask
@@ -16,9 +16,8 @@ import random
 
 app = Flask(__name__, static_url_path='')
 
-db_file = os.path.join(app.instance_path, 'db.sqlite')
-reader = make_reader(db_file, plugins=[feed_slugs.init_reader])
-app.config.from_mapping(SECRET_KEY='dev',DATABASE=db_file)
+reader = make_reader('db.sqlite', plugins=[feed_slugs.init_reader])
+app.config.from_mapping(SECRET_KEY='dev',DATABASE='db.sqlite')
 
 
 init_app(app)
@@ -62,6 +61,7 @@ def list_feeds():
 
 
 @app.post("/feeds")
+@login_required
 def add_feed():
     f = request.form['url']
     reader.add_feed(f, exist_ok=True)
