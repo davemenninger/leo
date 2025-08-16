@@ -3,6 +3,7 @@
 from auth import auth, login_required
 from db import init_app
 from feedfinder2 import find_feeds
+from flask import flash
 from flask import Flask
 from flask import g
 from flask import redirect, url_for
@@ -70,11 +71,18 @@ def add_feed():
     return redirect(url_for("list_feeds"))
 
 
-@app.route("/feeds/<slug>")
+@app.get("/feeds/<slug>")
 def show_feed(slug):
     feed = reader.get_feed_by_slug(slug.lower())
     entries = reader.get_entries(feed=feed)
     return render_template('feed.html', feed=feed, entries=entries)
+
+@app.post("/feeds/<slug>/delete")
+def delete_feed(slug):
+    flash("i deleted " + slug + "...")
+    feed = reader.get_feed_by_slug(slug.lower())
+    reader.delete_feed(feed)
+    return redirect(url_for("list_feeds"))
 
 
 def generate_id():
