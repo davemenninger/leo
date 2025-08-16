@@ -78,6 +78,7 @@ def show_feed(slug):
     return render_template('feed.html', feed=feed, entries=entries)
 
 @app.post("/feeds/<slug>/delete")
+@login_required
 def delete_feed(slug):
     flash("i deleted " + slug + "...")
     feed = reader.get_feed_by_slug(slug.lower())
