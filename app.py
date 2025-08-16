@@ -18,6 +18,9 @@ import random
 app = Flask(__name__, static_url_path='')
 
 reader = make_reader('db.sqlite', plugins=[feed_slugs.init_reader])
+reader.enable_search()
+reader.update_search()
+
 app.config.from_mapping(SECRET_KEY='dev',DATABASE='db.sqlite')
 
 
@@ -85,6 +88,14 @@ def delete_feed(slug):
     reader.delete_feed(feed)
     return redirect(url_for("list_feeds"))
 
+@app.route("/search", methods=['GET','POST'])
+def search_entries():
+    if request.method == 'POST':
+        query = request.form['query']
+        results = reader.search_entries(query)
+        return render_template("search.html", query=query,
+                               results=results, get_entry=reader.get_entry)
+    return render_template("search.html")
 
 def generate_id():
     chars = '0123456789abcdefghjkmnpqrstvwxyz'

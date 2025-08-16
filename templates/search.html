@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block title %}search{% endblock %}
+{% block content %}
+
+<h1>search</h1>
+
+<form action="/search" method="post">
+  <input type="text" name="query" value="{{ query }}"></input>
+  <button>search</button>
+</form>
+
+<ul>
+  {% for r in results %}
+      {% set e = get_entry(r) %}
+      <li>
+        <h3>
+          <a href={{ e.link }} >
+            {{ r.metadata['.title'].value }}
+          </a>
+        </h3>
+        {{ r.metadata['.title'].apply("<b>","</b>") }}
+        <details>
+          <summary>
+          {% if r.content['.summary'] %}
+            {{ r.content['.summary'].apply("<b>", "</b>") }}
+          {% endif %}
+          </summary>
+          <p>
+          {{ e.get_content().value | clean | safe }}
+          </p>
+        </details>
+      </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
