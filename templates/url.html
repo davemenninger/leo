@@ -17,7 +17,11 @@
   <li>
     <form method="post" action="/feeds">
       <input  type="text" name="url" value="{{ f }}"/>
-      <button>subscribe</button>
+      {% if get_feed(f, false)  %}
+        already subscribed
+      {% else %}
+        <button>subscribe</button>
+      {% endif %}
     </form>
   </li>
   {% endfor %}

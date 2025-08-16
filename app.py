@@ -38,11 +38,10 @@ def inject_clean(html):
 
 @app.route("/")
 def home():
-    reader.update_feeds()
     return render_template('home.html')
 
 
-@app.route("/url")
+@app.get("/url")
 def url():
     url = request.args.get('url', '')
     text = request.args.get('text', '')
@@ -51,7 +50,8 @@ def url():
         feeds = find_feeds(url)
     else:
         feeds = find_feeds(text)
-    return render_template('url.html', url=url, text=text, title=title, feeds=feeds)
+    return render_template('url.html', url=url, text=text, title=title,
+                           feeds=feeds, get_feed=reader.get_feed)
 
 
 @app.get("/feeds")
