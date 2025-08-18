@@ -4,6 +4,8 @@
   --color-a2: color(display-p3 0.853 0.953 0.826);
   --color-b1: #bfdbfe;
   --color-b2: #ea580c;
+  --color-c1: #f97316;
+  --color-c2: #1f2937;
 }
 
 /* https://fossheim.io/writing/posts/accessible-theme-picker-html-css-js/ */
@@ -30,6 +32,18 @@
   --color-accent: white;
   --color-background: var(--color-b2);
   --color-text: var(--color-b1);
+}
+
+[data-selected-theme="combo-5"] {
+  --color-accent: white;
+  --color-background: var(--color-c1);
+  --color-text: var(--color-c2);
+}
+
+[data-selected-theme="combo-6"] {
+  --color-accent: white;
+  --color-background: var(--color-c2);
+  --color-text: var(--color-c1);
 }
 
 /* https://www.joshwcomeau.com/css/custom-css-reset/ */
