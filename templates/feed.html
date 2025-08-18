@@ -7,6 +7,11 @@
     {{ feed.resource_id }} | {{ feed.title }} | {{ feed.url }} | {{feed.link}}
 </pre>
 
+{% set slug = get_feed_slug(feed.url) %}
+<form method="post" action="{{ url_for('delete_feed', slug=slug) }}">
+  <button>unsubscribe</button>
+</form>
+
 <ul>
   {% for e in entries %}
   <li>
