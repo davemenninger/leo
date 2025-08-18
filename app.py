@@ -59,11 +59,13 @@ def url():
                            feeds=feeds, get_feed=reader.get_feed)
 
 @app.post("/url")
+@login_required
 def add_url():
     f = request.form['url']
     return render_template("url.html", url=url)
 
 @app.post("/entries")
+@login_required
 def add_entry():
     link = request.form['link']
 
@@ -85,7 +87,6 @@ def add_entry():
 def list_feeds():
     feeds = reader.get_feeds()
     return render_template('feeds.html', feeds=feeds, reader=reader)
-
 
 @app.post("/feeds")
 @login_required
