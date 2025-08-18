@@ -7,8 +7,9 @@
 <ul>
   {% for f in feeds %}
   <li>
-    <a href="{{ url_for('show_feed', slug=reader.get_feed_slug(f.url)) }}">{{ f.title }}</a>
-    <form method="post" action="{{ url_for('delete_feed', slug=reader.get_feed_slug(f.url)) }}">
+    {% set slug = reader.get_feed_slug(f.url) %}
+    <a href="{{ url_for('show_feed', slug=slug) }}">{{ f.title }}</a>
+    <form method="post" action="{{ url_for('delete_feed', slug=slug) }}">
       <button>unsubscribe</button>
     </form>
   </li>
