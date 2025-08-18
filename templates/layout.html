@@ -8,12 +8,12 @@
     <link rel="manifest" href="/manifest.json" />
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="/leo.js" type="text/javascript"></script>
+    <script src="/leo.js" type="text/javascript" defer></script>
     <title>{% block title %}{% endblock %} - leo</title>
     {% endblock %}
   </head>
 
-  <body class="combo-1">
+  <body>
     <div id="menu">
       <ul>
         {% if g.user %}
@@ -35,6 +35,10 @@
     <div id="content">{% block content %}{% endblock %}</div>
     <div id="footer">
       {% block footer %}
+        <div class="theme-switcher">
+          <button data-theme="combo-1" aria-pressed="true">1</button>
+          <button data-theme="combo-2" aria-pressed="false">2</button>
+        </div>
       <hr/>
       <ul>
         <li><a
