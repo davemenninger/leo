@@ -10,7 +10,8 @@ from flask import redirect, url_for
 from flask import render_template
 from flask import request
 from nh3 import clean
-from reader import make_reader
+from reader import make_reader, FeedExistsError
+from urllib.parse import urlparse
 import feed_slugs
 import os
 import random
@@ -57,6 +58,28 @@ def url():
     return render_template('url.html', url=url, text=text, title=title,
                            feeds=feeds, get_feed=reader.get_feed)
 
+@app.post("/url")
+def add_url():
+    f = request.form['url']
+    return render_template("url.html", url=url)
+
+@app.post("/entries")
+def add_entry():
+    link = request.form['link']
+
+    o = urlparse(link)
+    feed = o.scheme + "://" + o.netloc
+
+    try:
+        reader.add_feed(feed)
+        reader.set_feed_slug(feed, generate_id())
+        reader.disable_feed_updates(feed)
+    except FeedExistsError:
+        pass
+
+    reader.add_entry({'feed_url': feed,'id': link}, overwrite=True)
+    return redirect(url_for('show_feed',
+                            slug=reader.get_feed_slug(feed)))
 
 @app.get("/feeds")
 def list_feeds():

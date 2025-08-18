@@ -13,6 +13,15 @@
 </p>
 
 <ul>
+  {% if not feeds %}
+  {% set link = url if url else text %}
+  <li>
+    <form method="post" action="/entries">
+      <input type="text" name="link" value="{{ link }}"/>
+      <button>manual save</button>
+    </form>
+  </li>
+  {% endif %}
   {% for f in feeds %}
   <li>
     <form method="post" action="/feeds">
