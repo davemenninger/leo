@@ -1,7 +1,7 @@
-const version = "2";
+const version = "3";
 
 const urlsToCache = [
-  "leo.js"
+  "/leo.js"
 ];
 
 self.addEventListener("install", event => {
