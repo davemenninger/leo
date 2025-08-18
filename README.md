@@ -12,4 +12,4 @@ _or_
 
 `. .venv/bin/activate.fish`
 
-`flask run`
+`flask run --debug`
