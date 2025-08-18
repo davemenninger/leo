@@ -28,6 +28,10 @@
         <li><a href="{{ url_for('list_feeds') }}">feeds</a></li>
         <li><a href="{{ url_for('search_entries') }}">search</a></li>
       </ul>
+      <form action="/url" method="get">
+        <input type="text" name="url" value=""></input>
+        <button>go</button>
+      </form>
       {% for message in get_flashed_messages() %}
         <div class="flash">{{ message }}</div>
       {% endfor %}
